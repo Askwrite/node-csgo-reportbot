@@ -14,4 +14,4 @@ Format accounts.txt: Username:Password
 
 You can easily run the script via "node bot.js", you will be asked for the Steam ID 64 of the player.
 
-![]({{site.baseurl}}/http://i.imgur.com/PPEIPx8.png)
+![](http://i.imgur.com/PPEIPx8.png)
