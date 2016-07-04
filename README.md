@@ -2,7 +2,7 @@
 
 A node-steam plugin for reporting players in Counter-Strike: Global Offensive.
 
-Based on [node-steam](https://github.com/DoctorMcKay/node-steam) by [DoctorMcKay](https://github.com/DoctorMcKay)
+Based on [node-steam](https://github.com/seishun/node-steam) by [DoctorMcKay](https://github.com/seishun)
 
 Credits: Trololo for the idea
 
