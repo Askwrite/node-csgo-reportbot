@@ -8,8 +8,8 @@ Credits: Trololo for the idea
 
 ## Installation
 
-First you have to download the repo, install the dependencies (npm install), then run updater.js from the directory called "protos".
-After that, you have to create a file (in the main directory) called "accounts.txt" and paste your steam accounts there (Steamguard must be deactivated).
+First you have to download the repo, install the dependencies (npm install), then run updater.js from the directory called "protos".<br />
+After that, you have to create a file (in the main directory) called "accounts.txt" and paste your steam accounts there (Steamguard must be deactivated).<br />
 Format accounts.txt: Username:Password
 
 ## Usage
