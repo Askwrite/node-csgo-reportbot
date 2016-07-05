@@ -17,7 +17,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node bot.js"
+    "update": "node ./protos/updater.js",
+    "install": "npm run update",
+    "start": "node bot.js"
   },
   "repository": {
     "type": "git",
