@@ -6,6 +6,7 @@ var fs = require("fs"),
     Protos = require("./protos/protos.js"),
     CountReports = 0,
     Long = require("long"),
+    process = require("process"),
     steamID = readlineSync.question("SteamID64 which will be reported: ");
 
 var ClientHello = 4006,
@@ -145,6 +146,9 @@ function sendReport(GC, Client, account_name) {
         rptVoiceabuse: 7
     }).toBuffer());
 }
+
+process.on('uncaughtException', function (err) {
+});
 
 loginAndReport(steamID);
 console.log("Initializing ReportBot by askwrite...\nCredits: Trololo - Idea");
