@@ -6,7 +6,8 @@ var protos = [
   "base_gcmessages.proto",
   "steammessages.proto",
   "cstrike15_gcmessages.proto",
-  "gcsdk_gcmessages.proto"
+  "gcsdk_gcmessages.proto",
+  "engine_gcmessages.proto"
 ];
 
 fs.readdir(__dirname, function(err, filenames) {
@@ -15,7 +16,6 @@ fs.readdir(__dirname, function(err, filenames) {
   }
 
   filenames.forEach(function(filename) {
-    console.log(filename);
     if (filename != "protos.js" && filename != "updater.js") {
       fs.unlinkSync(__dirname + "/" + filename);
     }
