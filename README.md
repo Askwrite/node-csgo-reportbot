@@ -1,6 +1,7 @@
 # node-csgo-reportbot
 
 A node-steam plugin for reporting players in Counter-Strike: Global Offensive.
+Demo: http://report-service.xyz
 
 ## Requirements
 
