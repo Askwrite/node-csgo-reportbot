@@ -33,6 +33,10 @@ You will be prompted to enter the target player's SteamID64
 npm run update
 ```
 
+## Note
+Don't kill the process by yourself!<br>
+The process will be killed automatically after it finished to report the target with all the accounts.
+
 ## Credits
 
 * Based on [node-steam](https://github.com/seishun/node-steam) by [seishun](https://github.com/seishun)
