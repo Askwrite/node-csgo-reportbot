@@ -99,7 +99,8 @@ function processSteamReport(element, indexElement, array) {
                 case Protos.ECsgoGCMsg.k_EMsgGCCStrike15_v2_MatchmakingGC2ClientHello:
                     break;
                 case Protos.ECsgoGCMsg.k_EMsgGCCStrike15_v2_ClientReportResponse:
-                    console.log("[GC - " + account_name + "] Report with confirmation ID: " + Protos.CMsgGCCStrike15_v2_ClientReportResponse.decode(buffer).confirmationId.toString() + " sent!");
+                    CountReports++;
+                    console.log("[GC - " + account_name + "] (" + CountReports + ") Report with confirmation ID: " + Protos.CMsgGCCStrike15_v2_ClientReportResponse.decode(buffer).confirmationId.toString() + " sent!");
                     SteamClients[indexElement].disconnect();
                     break;
                 default:
