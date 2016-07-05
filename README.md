@@ -2,18 +2,37 @@
 
 A node-steam plugin for reporting players in Counter-Strike: Global Offensive.
 
-Based on [node-steam](https://github.com/seishun/node-steam) by [seishun](https://github.com/seishun)
+## Requirements
 
-Credits: Trololo for the idea
+| Prerequisite    | How to check | How to install
+| --------------- | ------------ | ------------- |
+| Node.js 0.12.x  | `node -v`    | [nodejs.org](http://nodejs.org/) |
+
+Additionally, you will need at least one Steam account with CS:GO, and Steamguard must be deactivated.
 
 ## Installation
 
-First you have to download the repo, install the dependencies (npm install), then run updater.js from the directory called "protos".<br />
-After that, you have to create a file (in the main directory) called "accounts.txt" and paste your steam accounts there (Steamguard must be deactivated).<br />
-Format accounts.txt: Username:Password
+1. Download the latest [stable](https://github.com/Askwrite/node-csgo-reportbot/releases/latest) or [development](https://github.com/Askwrite/node-csgo-reportbot/archive/master.zip) version of this package.
+2. Run `npm install` from your terminal
+3. rename `accounts.example.txt` to `accounts.txt` and modify it with your account credentials. You may enter multiple accounts.
 
 ## Usage
 
-You can easily run the script via "node bot.js", you will be asked for the Steam ID 64 of the player.
+```
+npm start
+```
+
+You will be prompted to enter the target player's SteamID64
 
 ![](http://i.imgur.com/PPEIPx8.png)
+
+### Updating Protocol Definitions
+
+```
+npm run update
+```
+
+## Credits
+
+* Based on [node-steam](https://github.com/seishun/node-steam) by [seishun](https://github.com/seishun)
+* Trololo for the idea
