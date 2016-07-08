@@ -1,7 +1,7 @@
 var fs = require("fs"),
     Steam = require("steam"),
     SteamID = require("steamid"),
-    IntervalInt = null,
+    IntervalIntArray = {},
     readlineSync = require("readline-sync"),
     Protos = require("./protos/protos.js"),
     CountReports = 0,
@@ -10,10 +10,9 @@ var fs = require("fs"),
     SteamUsers = {},
     SteamGCs = {},
     SteamFriends = {},
-    process = require("process");
-    steamID = readlineSync.question("SteamID64 which will be reported: ");
-
-var ClientHello = 4006,
+    process = require("process"),
+    steamID = readlineSync.question("SteamID64 which will be reported: "),
+    ClientHello = 4006,
     ClientWelcome = 4004;
 
 var accounts = [];
@@ -33,7 +32,7 @@ for (i in arrayAccountsTxt) {
 arrayAccountsTxt.forEach(processSteamReport);
 
 function processSteamReport(element, indexElement, array) {
-    if(element != "") {
+    if (element != "") {
         var account = element.toString().trim().split(":");
         var account_name = account[0];
         var password = account[1];
@@ -41,7 +40,7 @@ function processSteamReport(element, indexElement, array) {
         SteamUsers[indexElement] = new Steam.SteamUser(SteamClients[indexElement]);
         SteamGCs[indexElement] = new Steam.SteamGameCoordinator(SteamClients[indexElement], 730);
         SteamFriends[indexElement] = new Steam.SteamFriends(SteamClients[indexElement]);
-        
+
         SteamClients[indexElement].connect();
 
         SteamClients[indexElement].on("connected", function() {
@@ -62,6 +61,11 @@ function processSteamReport(element, indexElement, array) {
                     console.log("\n[STEAM CLIENT - " + account_name + "] Login failed!");
                     console.log(res);
                     SteamClients[indexElement].disconnect();
+                    SteamClients.splice(indexElement, 1);
+                    SteamFriends.splice(indexElement, 1);
+                    SteamGCs.splice(indexElement, 1);
+                    SteamUsers.splice(indexElement, 1);
+                    IntervalIntArray.splice(indexElement, 1);
                 }
             } else {
                 SteamFriends[indexElement].setPersonaState(Steam.EPersonaState.Offline);
@@ -73,7 +77,7 @@ function processSteamReport(element, indexElement, array) {
                 });
 
                 if (SteamGCs[indexElement]) {
-                    IntervalInt = setInterval(function() {
+                    IntervalIntArray[indexElement] = setInterval(function() {
                         SteamGCs[indexElement].send({
                             msg: ClientHello,
                             proto: {}
@@ -81,6 +85,11 @@ function processSteamReport(element, indexElement, array) {
                     }, 2000);
                 } else {
                     SteamClients[indexElement].disconnect();
+                    SteamClients.splice(indexElement, 1);
+                    SteamFriends.splice(indexElement, 1);
+                    SteamGCs.splice(indexElement, 1);
+                    SteamUsers.splice(indexElement, 1);
+                    IntervalIntArray.splice(indexElement, 1);
                 }
             }
         });
@@ -88,12 +97,17 @@ function processSteamReport(element, indexElement, array) {
         SteamClients[indexElement].on("error", function(err) {
             console.log("[STEAM CLIENT - " + account_name + "] Account is probably ingame! Logged out!");
             SteamClients[indexElement].disconnect();
+            SteamClients.splice(indexElement, 1);
+            SteamFriends.splice(indexElement, 1);
+            SteamGCs.splice(indexElement, 1);
+            SteamUsers.splice(indexElement, 1);
+            IntervalIntArray.splice(indexElement, 1);
         });
 
         SteamGCs[indexElement].on("message", function(header, buffer, callback) {
             switch (header.msg) {
                 case ClientWelcome:
-                    clearInterval(IntervalInt);
+                    clearInterval(IntervalIntArray[indexElement]);
                     sendReport(SteamGCs[indexElement], SteamClients[indexElement], account_name, steamID);
                     break;
                 case Protos.ECsgoGCMsg.k_EMsgGCCStrike15_v2_MatchmakingGC2ClientHello:
@@ -102,6 +116,11 @@ function processSteamReport(element, indexElement, array) {
                     CountReports++;
                     console.log("[GC - " + account_name + "] (" + CountReports + ") Report with confirmation ID: " + Protos.CMsgGCCStrike15_v2_ClientReportResponse.decode(buffer).confirmationId.toString() + " sent!");
                     SteamClients[indexElement].disconnect();
+                    SteamClients.splice(indexElement, 1);
+                    SteamFriends.splice(indexElement, 1);
+                    SteamGCs.splice(indexElement, 1);
+                    SteamUsers.splice(indexElement, 1);
+                    IntervalIntArray.splice(indexElement, 1);
                     break;
                 default:
                     console.log(header);
@@ -128,7 +147,6 @@ function sendReport(GC, Client, account_name) {
     }).toBuffer());
 }
 
-process.on('uncaughtException', function (err) {
-});
+process.on("uncaughtException", function(err) {});
 
 console.log("Initializing ReportBot by askwrite...\nCredits: Trololo - Idea");
